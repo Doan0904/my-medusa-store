@@ -1,0 +1,35 @@
+name: Deploy Medusa to CapRover
+
+# Kích hoạt khi có lệnh push vào nhánh main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Bước 1: Lấy code từ GitHub về máy ảo của GitHub Actions
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Bước 2: Cài đặt Node.js (cần thiết để chạy lệnh npm install caprover)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Bước 3: Cài đặt công cụ CapRover CLI
+      - name: Install CapRover CLI
+        run: npm install -g caprover
+
+      # Bước 4: Thực hiện lệnh Deploy lên Server của bạn
+      - name: Deploy to CapRover Server
+        run: |
+          caprover deploy \
+            --caproverUrl "${{ secrets.CAPROVER_SERVER }}" \
+            --caproverPassword "${{ secrets.CAPROVER_PASSWORD }}" \
+            --caproverApp "zang-finance-app" \
+            --branch main
