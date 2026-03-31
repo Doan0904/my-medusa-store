@@ -18,12 +18,19 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Deploy to CapRover via CLI
-        # Lệnh này sẽ chui vào thư mục con và ra lệnh deploy trực tiếp
+      - name: Bundle and Deploy
         run: |
-          cd my-medusa-store
+          # 1. Chui vào tận cùng nơi chứa code Medusa
+          # Dựa trên log của Zang, đường dẫn đúng là:
+          cd my-medusa-store/my-medusa-store
+          
+          # 2. Đóng gói toàn bộ code thành file deploy.tar
+          tar -cvf ../../deploy.tar .
+          
+          # 3. Đẩy file này lên CapRover
+          cd ../../
           npx caprover deploy \
             --caproverUrl "${{ secrets.CAPROVER_SERVER_URL }}" \
             --appToken "${{ secrets.CAPROVER_APP_TOKEN }}" \
             --appName "zang-finance-app" \
-            --branch "main"
+            --tarFile "./deploy.tar"
