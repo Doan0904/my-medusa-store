@@ -24,3 +24,4 @@ jobs:
           
           # App Token lấy từ phần Deployment của App
           token: ${{ secrets.CAPROVER_APP_TOKEN }}
+          path: ./my-medusa-store
