@@ -20,15 +20,17 @@ jobs:
 
       - name: Bundle and Deploy
         run: |
-          # 1. Chui vào tận cùng nơi chứa code Medusa
-          # Dựa trên log của Zang, đường dẫn đúng là:
-          cd my-medusa-store/my-medusa-store
+          # 1. Kiểm tra xem chúng ta đang ở đâu (để debug nếu cần)
+          ls -R
           
-          # 2. Đóng gói toàn bộ code thành file deploy.tar
-          tar -cvf ../../deploy.tar .
+          # 2. Chui vào thư mục chứa code Medusa (Chỉ dùng 1 cấp thôi Zang nhé)
+          cd my-medusa-store
           
-          # 3. Đẩy file này lên CapRover
-          cd ../../
+          # 3. Đóng gói toàn bộ code bên trong thư mục này
+          tar -cvf ../deploy.tar .
+          
+          # 4. Quay ra ngoài và đẩy file lên CapRover
+          cd ..
           npx caprover deploy \
             --caproverUrl "${{ secrets.CAPROVER_SERVER_URL }}" \
             --appToken "${{ secrets.CAPROVER_APP_TOKEN }}" \
