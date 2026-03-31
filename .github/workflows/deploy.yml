@@ -13,18 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # BƯỚC QUAN TRỌNG: Đưa code từ thư mục con ra thư mục gốc để CapRover thấy
-      - name: Prepare Workspace
-        run: |
-          cp my-medusa-store/captain-definition ./
-          cp my-medusa-store/Dockerfile ./
-          # Bạn có thể dùng lệnh cp -r nếu Dockerfile cần các file khác ở cùng cấp
-          # Nhưng tạm thời cứ đưa 2 file này ra gốc là GitHub Action sẽ chạy được
-
-      - name: Deploy to CapRover
-        uses: caprover/deploy-from-github@v1.1.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          server: ${{ secrets.CAPROVER_SERVER_URL }}
-          app: 'zang-finance-app'
-          token: ${{ secrets.CAPROVER_APP_TOKEN }}
-          # XÓA DÒNG PATH CŨ ĐI VÌ NÓ KHÔNG HỖ TRỢ
+          node-version: '20'
+
+      - name: Deploy to CapRover via CLI
+        # Lệnh này sẽ chui vào thư mục con và ra lệnh deploy trực tiếp
+        run: |
+          cd my-medusa-store
+          npx caprover deploy \
+            --caproverUrl "${{ secrets.CAPROVER_SERVER_URL }}" \
+            --appToken "${{ secrets.CAPROVER_APP_TOKEN }}" \
+            --appName "zang-finance-app" \
+            --branch "main"

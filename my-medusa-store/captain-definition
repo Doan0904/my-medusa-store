@@ -1,4 +1,4 @@
 {
   "schemaVersion": 2,
-  "dockerfilePath": "my-medusa-store/Dockerfile"
+  "dockerfilePath": "Dockerfile"
 }
