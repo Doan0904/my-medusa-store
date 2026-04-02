@@ -19,5 +19,11 @@ export default defineConfig({
       jwtSecret: process.env.JWT_SECRET || "supersecret",
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
     }
+  },
+admin: {
+    // Ép backend phục vụ admin dashboard 
+    disable: false, 
+    // Trỏ về đúng domain của bạn [cite: 32]
+    backendUrl: process.env.MEDUSA_BACKEND_URL || "https://zang-finance-app.app.lilichilly.com"
   }
 })
