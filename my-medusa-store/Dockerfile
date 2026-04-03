@@ -29,6 +29,7 @@ COPY --from=builder /app/medusa-config.ts ./
 # 👉 THÊM DÒNG NÀY ĐỂ FIX LỖI TS2307:
 COPY --from=builder /app/tsconfig.json ./
 
+RUN ln -s .medusa/server/public public
 
 COPY --from=builder /app/node_modules ./node_modules
 # Cài đặt chỉ các thư viện production để image nhẹ và bảo mật
