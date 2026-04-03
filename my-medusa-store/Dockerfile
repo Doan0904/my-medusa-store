@@ -25,6 +25,11 @@ COPY --from=builder /app/package-lock.json* ./
 COPY --from=builder /app/.medusa ./.medusa
 
 COPY --from=builder /app/medusa-config.ts ./
+
+# 👉 THÊM DÒNG NÀY ĐỂ FIX LỖI TS2307:
+COPY --from=builder /app/tsconfig.json ./
+
+
 COPY --from=builder /app/node_modules ./node_modules
 # Cài đặt chỉ các thư viện production để image nhẹ và bảo mật
 # RUN npm install --omit=dev
