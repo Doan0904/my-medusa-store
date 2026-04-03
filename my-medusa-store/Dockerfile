@@ -8,7 +8,7 @@ COPY package.json package-lock.json* ./
 RUN npm install
 COPY . .
 # Thực hiện biên dịch dự án Medusa v2 (Tạo ra thư mục .medusa)
-RUN npm run build
+RUN MEDUSA_BACKEND_URL=https://zang-finance-app.app.lilichilly.com npm run build
 
 
 # Production stage
