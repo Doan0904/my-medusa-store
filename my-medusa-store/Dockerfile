@@ -1,16 +1,8 @@
 FROM node:20-alpine
-
 WORKDIR /app
-
 COPY package.json package-lock.json* ./
-
-RUN npm install
-
+RUN npm install --include=dev
 COPY . .
-
-# Build admin ở đây, trong image
 RUN npx medusa build
-
 EXPOSE 9000 7001
-
-CMD ["npm", "run", "start"]
+CMD ["/bin/sh", "-c", "npx medusa db:migrate && npx medusa start"]
