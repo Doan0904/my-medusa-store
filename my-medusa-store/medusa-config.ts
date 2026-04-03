@@ -24,6 +24,6 @@ admin: {
     // Ép backend phục vụ admin dashboard 
     disable: true, 
     // Trỏ về đúng domain của bạn [cite: 32]
-    backendUrl: process.env.MEDUSA_BACKEND_URL || "https://zang-finance-app.app.lilichilly.com"
+    // backendUrl: process.env.MEDUSA_BACKEND_URL || "https://zang-finance-app.app.lilichilly.com"
   }
 })
