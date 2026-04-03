@@ -1,36 +1,59 @@
 services:
-  # 1. Database
+  # 1. PostgreSQL Database
   db:
-    image: postgres:15
+    image: postgres:15-alpine
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=medusa-db
+      POSTGRES_USER: medusa
+      POSTGRES_PASSWORD: medusa
+      POSTGRES_DB: medusa-db
+    ports:
+      - "5433:5432"           # Mở port để debug bằng DBeaver/TablePlus nếu cần
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U medusa"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
   # 2. Redis
   redis:
-    image: redis:latest
+    image: redis:7-alpine
     restart: always
-
-  # 3. Medusa Backend
-  medusa:
-    image: medusajs/medusa:latest
     ports:
-      - "9000:9000"
-      - "7001:7001"
+      - "6380:6379"           # Mở port để debug nếu cần
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # 3. Medusa Backend — build từ Dockerfile của bạn (giống hệt CapRover)
+  medusa:
+    build:
+      context: ./my-medusa-store   # Trỏ vào thư mục chứa Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"           # API
+      - "7001:7001"           # Admin dashboard (nếu serve riêng)
     environment:
-      - DATABASE_URL=postgres://postgres:postgres@db:5432/medusa-db
-      - REDIS_URL=redis://redis:6379
-      - JWT_SECRET=something_very_secret
-      - COOKIE_SECRET=something_very_secret
+      NODE_ENV: production
+      DATABASE_URL: postgres://medusa:medusa@db:5432/medusa-db
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: local-jwt-secret-for-testing
+      COOKIE_SECRET: local-cookie-secret-for-testing
+      STORE_CORS: http://localhost:8000
+      ADMIN_CORS: http://localhost:9000,http://localhost:7001
+      AUTH_CORS: http://localhost:9000,http://localhost:7001
+      MEDUSA_BACKEND_URL: http://localhost:9000
     depends_on:
       db:
         condition: service_healthy
       redis:
-        condition: service_started
+        condition: service_healthy
+    # Giữ container chạy kể cả khi migrate lỗi để xem log
+    restart: on-failure
+
+volumes:
+  postgres_data:
