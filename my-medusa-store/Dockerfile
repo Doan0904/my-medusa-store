@@ -9,6 +9,8 @@ RUN npm install
 COPY . .
 # Thực hiện biên dịch dự án Medusa v2 (Tạo ra thư mục .medusa)
 RUN npm run build
+
+
 # Production stage
 FROM node:20-alpine
 WORKDIR /app
@@ -16,9 +18,14 @@ WORKDIR /app
 ENV NODE_ENV=production
 # Chỉ copy những file thực thi và cấu hình cần thiết từ builder
 COPY --from=builder /app/package.json ./
-COPY --from=builder /app/package-lock.json ./
+
+COPY --from=builder /app/package-lock.json* ./
+
 # Thư mục .medusa chứa kết quả build của Medusa v2
 COPY --from=builder /app/.medusa ./.medusa
+
+COPY --from=builder /app/medusa-config.ts ./
+
 # Cài đặt chỉ các thư viện production để image nhẹ và bảo mật
 RUN npm install --omit=dev
 EXPOSE 9000
