@@ -3,15 +3,14 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Cài đặt thư viện cần thiết
-COPY package.json package-lock.json* ./
+# SỬA ĐƯỜNG DẪN: Lấy file từ đúng thư mục con của Github
+COPY my-medusa-store-storefront/package.json my-medusa-store-storefront/package-lock.json* ./
 RUN npm install
 
-# Copy toàn bộ source code
-COPY . .
+# SỬA ĐƯỜNG DẪN: Copy toàn bộ code frontend vào thư mục /app
+COPY my-medusa-store-storefront/ .
 
-# Build ứng dụng Next.js
-# Bạn có thể truyền thẳng biến môi trường vào đây giống như lúc sửa lỗi Admin
+# Build ứng dụng Next.js kèm biến môi trường
 ARG NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://zang-finance-app.app.lilichilly.com
 ENV NEXT_PUBLIC_MEDUSA_BACKEND_URL=$NEXT_PUBLIC_MEDUSA_BACKEND_URL
 
@@ -24,7 +23,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Copy các thư mục và file kết quả build từ stage trên
+# Lấy các file đã build xong từ bước trên
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
