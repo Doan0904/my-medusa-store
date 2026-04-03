@@ -25,9 +25,9 @@ COPY --from=builder /app/package-lock.json* ./
 COPY --from=builder /app/.medusa ./.medusa
 
 COPY --from=builder /app/medusa-config.ts ./
-
+COPY --from=builder /app/node_modules ./node_modules
 # Cài đặt chỉ các thư viện production để image nhẹ và bảo mật
-RUN npm install --omit=dev
+# RUN npm install --omit=dev
 EXPOSE 9000
 # Chạy migrate trước khi khởi động server Medusa v2
 CMD ["sh", "-c", "npx medusa db:migrate && npx medusa start"]
