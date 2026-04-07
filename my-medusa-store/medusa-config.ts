@@ -2,6 +2,9 @@ import { loadEnv, defineConfig } from '@medusajs/framework/utils'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
+const safeBackendUrl = process.env.MEDUSA_BACKEND_URL 
+  ? process.env.MEDUSA_BACKEND_URL.replace(/\/$/, '') 
+  : "https://zang-finance-app.app.lilichilly.com";
 export default defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
@@ -40,7 +43,7 @@ modules: [
               upload_dir: "uploads",
               
               // Để Medusa biết đường tạo link ảnh public trả về cho frontend
-              backend_url: `${process.env.MEDUSA_BACKEND_URL || "https://zang-finance-app.app.lilichilly.com"}/uploads`,
+              backend_url: `${safeBackendUrl}/uploads`,
             },
           },
         ],
