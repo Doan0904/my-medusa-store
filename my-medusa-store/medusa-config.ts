@@ -43,6 +43,11 @@ modules: [
               secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
               bucket: process.env.S3_BUCKET,
               region: process.env.S3_REGION,
+		
+		force_path_style: true,
+              	additional_client_config: {
+                forcePathStyle: true,
+              },
               
               // ❌ ĐÃ XÓA force_path_style: Bunny CDN chuẩn S3 không cần ép path-style như MinIO
             },
