@@ -45,6 +45,9 @@ modules: [
               bucket: "medusa-media", // Đảm bảo bạn đã tạo bucket tên này trong MinIO
               region: "us-east-1",
               force_path_style: true,
+	additional_client_config: {
+      forcePathStyle: true,
+    },
             },
           },
         ],
