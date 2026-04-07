@@ -23,11 +23,6 @@ export default defineConfig({
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
 
 	// Mở cửa thư mục uploads
-	static: {
-        serve: true,           // Bật chế độ phục vụ file tĩnh
-        path: "/uploads",      // Đường dẫn trên URL
-        dir: "uploads"         // Thư mục tương ứng trên ổ cứng
-      }
     }
   },
 admin: {
@@ -47,10 +42,10 @@ modules: [
             id: "local",
             options: {
               // Thư mục chứa ảnh (Medusa sẽ tự tạo thư mục này trong source code)
-              upload_dir: "uploads",
+              upload_dir: "static/uploads",
               
               // Để Medusa biết đường tạo link ảnh public trả về cho frontend
-              backend_url: `${safeBackendUrl}/uploads`,
+              backend_url: `${safeBackendUrl}/static/uploads`,
             },
           },
         ],
