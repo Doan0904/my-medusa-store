@@ -40,7 +40,7 @@ modules: [
               upload_dir: "uploads",
               
               // Để Medusa biết đường tạo link ảnh public trả về cho frontend
-              backend_url: process.env.MEDUSA_BACKEND_URL || "https://zang-finance-app.app.lilichilly.com",
+              backend_url: `${process.env.MEDUSA_BACKEND_URL || "https://zang-finance-app.app.lilichilly.com"}/uploads`,
             },
           },
         ],
