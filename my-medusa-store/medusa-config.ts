@@ -38,7 +38,7 @@ modules: [
             options: {
               // 👉 SỬA LẠI ĐÚNG LINK API CỦA BẠN:
               file_url: "https://zang-minio-api.app.lilichilly.com/medusa-media",
-              endpoint: "http://srv-captain--zang-minio-api:9000",
+              endpoint: "https://zang-minio-api.app.lilichilly.com",
               
               access_key_id: process.env.S3_ACCESS_KEY_ID,
               secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
