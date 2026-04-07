@@ -26,7 +26,7 @@ admin: {
     // Trỏ về đúng domain của bạn [cite: 32]
     backendUrl: process.env.MEDUSA_BACKEND_URL || "http://localhost:9000"
   },
-// THÊM MODULE CHO MINIO
+// THÊM MODULE CHO BDD
 modules: [
     {
       resolve: "@medusajs/medusa/file",
@@ -36,23 +36,19 @@ modules: [
             resolve: "@medusajs/file-s3",
             id: "s3",
             options: {
-              // 👉 SỬA LẠI ĐÚNG LINK API CỦA BẠN:
-              file_url: "https://zang-minio-api.app.lilichilly.com/medusa-media",
-              endpoint: "https://zang-minio-api.app.lilichilly.com",
-              
+              // 👉 Gọi toàn bộ qua process.env để CapRover tự bơm cấu hình vào
+              file_url: process.env.S3_URL,
+              endpoint: process.env.S3_ENDPOINT,
               access_key_id: process.env.S3_ACCESS_KEY_ID,
               secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
-              bucket: "medusa-media", // Đảm bảo bạn đã tạo bucket tên này trong MinIO
-              region: "us-east-1",
-              force_path_style: true,
-	additional_client_config: {
-      forcePathStyle: true,
-    },
+              bucket: process.env.S3_BUCKET,
+              region: process.env.S3_REGION,
+              
+              // ❌ ĐÃ XÓA force_path_style: Bunny CDN chuẩn S3 không cần ép path-style như MinIO
             },
           },
         ],
       },
     },
   ]
-
 })

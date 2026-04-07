@@ -44,7 +44,7 @@ const nextConfig = {
       },
 	{
         protocol: "https",
-        hostname: "zang-minio-api.app.lilichilly.com",
+        hostname: "zang-store.b-cdn.net",
       },
       ...(S3_HOSTNAME && S3_PATHNAME
         ? [
