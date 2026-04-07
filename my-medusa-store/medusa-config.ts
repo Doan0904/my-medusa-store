@@ -21,6 +21,13 @@ export default defineConfig({
       authCors: process.env.AUTH_CORS || "http://localhost:7001",
       jwtSecret: process.env.JWT_SECRET || "supersecret",
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
+
+	// Mở cửa thư mục uploads
+	static: {
+        serve: true,           // Bật chế độ phục vụ file tĩnh
+        path: "/uploads",      // Đường dẫn trên URL
+        dir: "uploads"         // Thư mục tương ứng trên ổ cứng
+      }
     }
   },
 admin: {
