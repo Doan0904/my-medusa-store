@@ -47,6 +47,8 @@ modules: [
 		force_path_style: true,
               	additional_client_config: {
                 forcePathStyle: true,
+		requestChecksumCalculation: "WHEN_REQUIRED",
+                responseChecksumValidation: "WHEN_REQUIRED",
               },
               
               // ❌ ĐÃ XÓA force_path_style: Bunny CDN chuẩn S3 không cần ép path-style như MinIO
