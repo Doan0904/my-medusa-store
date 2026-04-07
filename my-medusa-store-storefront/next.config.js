@@ -44,7 +44,7 @@ const nextConfig = {
       },
 	{
         protocol: "https",
-        hostname: "zang-store.b-cdn.net",
+        hostname: "zang-finance-app.app.lilichilly.com",
       },
       ...(S3_HOSTNAME && S3_PATHNAME
         ? [

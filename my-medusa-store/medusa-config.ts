@@ -33,25 +33,14 @@ modules: [
       options: {
         providers: [
           {
-            resolve: "@medusajs/file-s3",
-            id: "s3",
+            resolve: "@medusajs/file-local",
+            id: "local",
             options: {
-              // 👉 Gọi toàn bộ qua process.env để CapRover tự bơm cấu hình vào
-              file_url: process.env.S3_URL,
-              endpoint: process.env.S3_ENDPOINT,
-              access_key_id: process.env.S3_ACCESS_KEY_ID,
-              secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
-              bucket: process.env.S3_BUCKET,
-              region: process.env.S3_REGION,
-		
-		force_path_style: true,
-              	additional_client_config: {
-                forcePathStyle: true,
-		requestChecksumCalculation: "WHEN_REQUIRED",
-                responseChecksumValidation: "WHEN_REQUIRED",
-              },
+              // Thư mục chứa ảnh (Medusa sẽ tự tạo thư mục này trong source code)
+              upload_dir: "uploads",
               
-              // ❌ ĐÃ XÓA force_path_style: Bunny CDN chuẩn S3 không cần ép path-style như MinIO
+              // Để Medusa biết đường tạo link ảnh public trả về cho frontend
+              backend_url: process.env.MEDUSA_BACKEND_URL || "https://zang-finance-app.app.lilichilly.com",
             },
           },
         ],
