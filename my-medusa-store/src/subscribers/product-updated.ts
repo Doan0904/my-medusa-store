@@ -3,6 +3,9 @@ import type { SubscriberArgs, SubscriberConfig } from "@medusajs/framework"
 export default async function productUpdatedHandler({
   event: { data },
 }: SubscriberArgs<{ id: string }>) {
+
+
+console.log(`[WEBHOOK] Bắt đầu xử lý thay đổi cho sản phẩm ID: ${data.id}`);
   const storefrontUrl = process.env.STOREFRONT_URL
   const secret = process.env.REVALIDATE_SECRET
 
