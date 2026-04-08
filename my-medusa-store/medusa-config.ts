@@ -52,6 +52,17 @@ modules: [
         ],
       },
     },
+
+	{
+      resolve: "@medusajs/payment-stripe",
+      options: {
+        api_key: process.env.STRIPE_API_KEY,
+        webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
+        // Bật tính năng tự động nhận diện phương thức thanh toán để hiện VNPay
+        automatic_payment_methods: true, 
+      },
+    },
+
   ]
 })
 
