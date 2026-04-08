@@ -35,6 +35,10 @@ COPY --from=builder /app/tsconfig.json ./
 # Dùng COPY . static để tạo sẵn thư mục nếu nó chưa tồn tại, tránh lỗi Docker
 COPY --from=builder /app/static ./static
 
+# Thêm dòng
+
+COPY --from=builder /app/src ./src
+
 COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 9000
