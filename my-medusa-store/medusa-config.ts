@@ -33,10 +33,7 @@ admin: {
   },
 // THÊM MODULE CHO BDD
 modules: [
-    {
-	resolve: "./src", // Chỉ định quét toàn bộ thư mục
-	
-},
+ 
 {
       resolve: "@medusajs/medusa/file",
       options: {
