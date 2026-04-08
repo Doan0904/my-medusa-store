@@ -42,10 +42,10 @@ modules: [
             id: "local",
             options: {
               // Thư mục chứa ảnh (Medusa sẽ tự tạo thư mục này trong source code)
-              upload_dir: "public/uploads",
+              upload_dir: "static/uploads",
               
               // Để Medusa biết đường tạo link ảnh public trả về cho frontend
-              backend_url: `${safeBackendUrl}/uploads`,
+              backend_url: `${safeBackendUrl}/static/uploads`,
             },
           },
         ],
