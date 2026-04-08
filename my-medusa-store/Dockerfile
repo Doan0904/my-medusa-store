@@ -31,13 +31,17 @@ COPY --from=builder /app/medusa-config.ts ./
 # Cần thiết cho production
 COPY --from=builder /app/tsconfig.json ./
 
+
+COPY --from=builder /app/src ./src
 # ✅ THÊM DÒNG NÀY ĐỂ COPY CẢ THƯ MỤC static (Nơi lưu ảnh mà chúng ta đã setup trước đó)
+
 # Dùng COPY . static để tạo sẵn thư mục nếu nó chưa tồn tại, tránh lỗi Docker
 COPY --from=builder /app/static ./static
 
+
+COPY --from=builder /app/.medusa/server/public ./public
 # Thêm dòng
 
-COPY --from=builder /app/src ./src
 
 COPY --from=builder /app/node_modules ./node_modules
 
