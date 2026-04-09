@@ -7,8 +7,8 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout(props: { children: React.ReactNode }) {
+  // Đã thêm suppressHydrationWarning vào html và body ở dưới
   return (
-    {/* Thêm suppressHydrationWarning vào html và body */}
     <html lang="en" data-mode="light" suppressHydrationWarning>
       <body suppressHydrationWarning>
         <main className="relative">{props.children}</main>
