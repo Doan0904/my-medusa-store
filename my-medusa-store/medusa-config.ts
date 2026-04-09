@@ -59,7 +59,26 @@ export default defineConfig({
           }
         ]
       }
+    },
+
+//MODULE FULFILLMENT
+
+	{
+      resolve: "@medusajs/medusa/fulfillment",
+      options: {
+        providers: [
+          {
+            resolve: "@medusajs/medusa/fulfillment-manual",
+            id: "manual",
+          },
+          {
+            resolve: "./src/modules/my-fulfillment",
+            id: "my-fulfillment",
+          },
+        ],
+      },
     }
+
   ]
 })
 
