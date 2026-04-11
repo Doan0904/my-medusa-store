@@ -36,7 +36,11 @@ const Payment = ({
   const router = useRouter()
   const pathname = usePathname()
 
-  const isOpen = searchParams.get("step") === "payment"
+  const [isOpen, setIsOpen] = useState(false)
+
+useEffect(() => {
+  setIsOpen(searchParams.get("step") === "payment")
+}, [searchParams])
 
   const setPaymentMethod = async (method: string) => {
     setError(null)
@@ -121,7 +125,7 @@ const Payment = ({
           {!isOpen && paymentReady && <CheckCircleSolid />}
         </Heading>
         {!isOpen && paymentReady && (
-          <Text>
+          <div className="txt-medium text-ui-fg-base">
             <button
               onClick={handleEdit}
               className="text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
