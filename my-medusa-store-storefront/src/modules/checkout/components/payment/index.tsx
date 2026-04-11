@@ -133,7 +133,7 @@ useEffect(() => {
             >
               Edit
             </button>
-          </Text>
+          </div>
         )}
       </div>
       <div>
