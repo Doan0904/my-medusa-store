@@ -35,6 +35,17 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
           data-testid={dataTestId}
         />
       )
+
+
+	case paymentSession?.provider_id === "vnpay":
+      return (
+        <VNPayPaymentButton
+          paymentSession={paymentSession}
+          notReady={notReady}
+          data-testid={dataTestId}
+        />
+      )
+
     case isManual(paymentSession?.provider_id):
       return (
         <ManualTestPaymentButton notReady={notReady} data-testid={dataTestId} />
@@ -198,4 +209,42 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
   )
 }
 
+const VNPayPaymentButton = ({
+  paymentSession,
+  notReady,
+  "data-testid": dataTestId,
+}: {
+  paymentSession: any
+  notReady: boolean
+  "data-testid"?: string
+}) => {
+  const [submitting, setSubmitting] = useState(false)
+
+  const handlePayment = async () => {
+    setSubmitting(true)
+    
+    // 1. Lấy URL VNPay đã được Backend tạo sẵn trong session data
+    const vnpUrl = paymentSession?.data?.vnp_url
+
+    if (vnpUrl) {
+      // 2. Chuyển hướng người dùng sang cổng VNPay
+      window.location.href = vnpUrl as string
+    } else {
+      setSubmitting(false)
+      alert("Không tìm thấy URL thanh toán VNPay. Vui lòng thử lại.")
+    }
+  }
+
+  return (
+    <Button
+      disabled={notReady}
+      isLoading={submitting}
+      onClick={handlePayment}
+      size="large"
+      data-testid={dataTestId}
+    >
+      Thanh toán qua VNPay
+    </Button>
+  )
+}
 export default PaymentButton

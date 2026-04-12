@@ -235,6 +235,8 @@ useEffect(() => {
                   <Text>
                     {isStripeLike(selectedPaymentMethod) && cardBrand
                       ? cardBrand
+			: selectedPaymentMethod === "vnpay" // THÊM DÒNG NÀY
+    			? "Thanh toán qua cổng VNPay"
                       : "Another step will appear"}
                   </Text>
                 </div>
